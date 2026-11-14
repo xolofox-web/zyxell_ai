@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c0b0a">
+<title>ZYXELL Admin</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ebe8e3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 5h14L5 19h14'/></svg>">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- ============ SETUP (first-run) ============ -->
+<div id="setupScreen" class="auth-screen hidden">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="brand-mark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14L5 19h14"/></svg>
+      </div>
+      <span class="auth-brand-text">ZYXELL ADMIN</span>
+    </div>
+    <div class="auth-title">Setup Admin Pertama</div>
+    <div class="auth-sub">Belum ada admin. Buat akun admin pertama untuk mengelola dashboard.</div>
+    <form id="setupForm" class="auth-form">
+      <div class="field">
+        <label>Username Admin</label>
+        <input type="text" id="setupUsername" required minlength="3" maxlength="32" autocomplete="username" placeholder="admin">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="setupPassword" required minlength="6" autocomplete="new-password" placeholder="Minimal 6 karakter">
+      </div>
+      <div class="field">
+        <label>Konfirmasi Password</label>
+        <input type="password" id="setupPasswordConfirm" required autocomplete="new-password" placeholder="Ulangi password">
+      </div>
+      <button type="submit" class="btn-cta">Buat Admin</button>
+      <div class="auth-error" id="setupError"></div>
+    </form>
+    <div class="auth-foot">Dashboard admin terpisah dari aplikasi utama.</div>
+  </div>
+</div>
+
+<!-- ============ LOGIN ============ -->
+<div id="loginScreen" class="auth-screen hidden">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="brand-mark">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14L5 19h14"/></svg>
+      </div>
+      <span class="auth-brand-text">ZYXELL ADMIN</span>
+    </div>
+    <div class="auth-title">Masuk</div>
+    <div class="auth-sub">Panel administrasi ZYXELL AI.</div>
+    <form id="loginForm" class="auth-form">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="loginUsername" required autocomplete="username">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="loginPassword" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn-cta">Masuk</button>
+      <div class="auth-error" id="loginError"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="appScreen" class="screen hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="sidebar-brand">
+        <div class="brand-mark">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14L5 19h14"/></svg>
+        </div>
+        <div>
+          <div class="brand-title">ZYXELL</div>
+          <div class="brand-subtitle">Admin Panel</div>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>
+        </svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-item" data-page="users">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span>Pengguna</span>
+      </button>
+      <button class="nav-item" data-page="apikeys">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15.5 7.5 3 3L22 7l-3-3"/><path d="M2 22 22 2"/><path d="m9 9 6 6"/>
+        </svg>
+        <span>API Keys</span>
+      </button>
+      <button class="nav-item" data-page="admins">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>
+        </svg>
+        <span>Admins</span>
+      </button>
+      <button class="nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span>Settings</span>
+      </button>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="admin-badge">
+        <div class="admin-avatar" id="adminAvatar">A</div>
+        <div class="admin-info">
+          <div class="admin-name" id="adminName">Admin</div>
+          <div class="admin-role">Administrator</div>
+        </div>
+      </div>
+      <button class="btn-icon" id="logoutBtn" title="Logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+        </svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- ===== DASHBOARD ===== -->
+    <section id="page-dashboard" class="page active">
+      <div class="page-head">
+        <div>
+          <h1>Dashboard</h1>
+          <p class="page-sub">Ringkasan aktivitas pengguna ZYXELL AI.</p>
+        </div>
+        <button class="btn-secondary" id="refreshDashboard">Muat ulang</button>
+      </div>
+      <div class="stat-grid" id="statGrid"></div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Aktivitas 7 Hari Terakhir</h2>
+          <span class="card-meta">Jumlah pesan per hari</span>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart" id="activityChart"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Pengguna Teratas</h2>
+          <span class="card-meta">Berdasarkan jumlah pesan</span>
+        </div>
+        <div class="table-wrap" id="topUsersTable"></div>
+      </div>
+    </section>
+
+    <!-- ===== USERS ===== -->
+    <section id="page-users" class="page hidden">
+      <div class="page-head">
+        <div>
+          <h1>Pengguna</h1>
+          <p class="page-sub">Daftar semua akun pengguna ZYXELL AI.</p>
+        </div>
+        <button class="btn-secondary" id="refreshUsers">Muat ulang</button>
+      </div>
+      <div class="toolbar">
+        <input type="search" id="userSearch" placeholder="Cari username...">
+        <span class="toolbar-meta" id="usersCount"></span>
+      </div>
+      <div class="card">
+        <div class="table-wrap" id="usersTableWrap"></div>
+      </div>
+    </section>
+
+    <!-- ===== API KEYS ===== -->
+    <section id="page-apikeys" class="page hidden">
+      <div class="page-head">
+        <div>
+          <h1>API Keys</h1>
+          <p class="page-sub">Kelola dan uji API key Gemini dari semua pengguna.</p>
+        </div>
+        <button class="btn-primary" id="testAllBtn">Test Semua</button>
+      </div>
+      <div class="toolbar">
+        <input type="search" id="apiKeySearch" placeholder="Cari username...">
+        <span class="toolbar-meta" id="apiKeySummary"></span>
+      </div>
+      <div class="card">
+        <div class="table-wrap" id="apiKeysTableWrap"></div>
+      </div>
+    </section>
+
+    <!-- ===== ADMINS ===== -->
+    <section id="page-admins" class="page hidden">
+      <div class="page-head">
+        <div>
+          <h1>Admins</h1>
+          <p class="page-sub">Kelola akses masuk ke dashboard admin.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Tambah Admin Baru</h2></div>
+        <form id="addAdminForm" class="form-inline">
+          <div class="field">
+            <label>Username</label>
+            <input type="text" id="newAdminUsername" required minlength="3" maxlength="32" placeholder="Username baru">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" id="newAdminPassword" required minlength="6" placeholder="Minimal 6 karakter">
+          </div>
+          <button type="submit" class="btn-primary">Tambah</button>
+        </form>
+        <div class="auth-error" id="addAdminError"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Daftar Admin</h2></div>
+        <div class="table-wrap" id="adminsTableWrap"></div>
+      </div>
+    </section>
+
+    <!-- ===== SETTINGS ===== -->
+    <section id="page-settings" class="page hidden">
+      <div class="page-head">
+        <div>
+          <h1>Settings</h1>
+          <p class="page-sub">Pengaturan akun dan sistem.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Ubah Password</h2></div>
+        <form id="changePasswordForm" class="stack-form">
+          <div class="field">
+            <label>Password lama</label>
+            <input type="password" id="oldPassword" required autocomplete="current-password">
+          </div>
+          <div class="field">
+            <label>Password baru</label>
+            <input type="password" id="newPassword" required minlength="6" autocomplete="new-password">
+          </div>
+          <div class="field">
+            <label>Konfirmasi password baru</label>
+            <input type="password" id="confirmPassword" required autocomplete="new-password">
+          </div>
+          <button type="submit" class="btn-primary">Simpan Password</button>
+          <div class="auth-error" id="changePasswordError"></div>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Backup &amp; Restore</h2></div>
+        <p class="card-note">Data backup berisi semua user, percakapan, bookmark, settings, dan akun admin.</p>
+        <div class="btn-row">
+          <button class="btn-secondary" id="exportBtn">Export semua data</button>
+          <button class="btn-secondary" id="importBtn">Import dari file</button>
+          <input type="file" id="importFile" accept=".json,application/json" hidden>
+        </div>
+      </div>
+
+      <div class="card danger-card">
+        <div class="card-head"><h2>Zona Berbahaya</h2></div>
+        <p class="card-note">Tindakan berikut tidak dapat dibatalkan.</p>
+        <div class="btn-row">
+          <button class="btn-danger" id="clearUsersBtn">Hapus semua user</button>
+          <button class="btn-danger" id="resetAllBtn">Reset total</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
